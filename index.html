@@ -121,11 +121,11 @@
 </div>
 
 <!-- Mobile Dropdown Menu (hidden initially) -->
-<div id="mobile-menu" class="hidden absolute top-28 left-0 w-full bg-luxury-beige text-luxury-black flex flex-col items-center space-y-4 py-6 z-40">
-  <a href="#home" class="block">Home</a>
-  <a href="#destinations" class="block">Destinations</a>
-  <a href="#faq" class="block">FAQ</a>
-  <a href="#contact" class="block">Contact</a>
+<div id="mobile-menu" class="hidden absolute top-28 left-0 w-full bg-white flex flex-col items-center space-y-4 py-6 z-40 shadow-lg">
+  <a href="#home" class="mobile-navlink block">Home</a>
+  <a href="#destinations" class="mobile-navlink block">Destinations</a>
+  <a href="#faq" class="mobile-navlink block">FAQ</a>
+  <a href="#contact" class="mobile-navlink block">Contact</a>
 </div>
   </div>
 
@@ -179,6 +179,15 @@
     #zt-navbar.zt-navbar--hidden {
       transform: translateY(-100%);
     }
+
+      /* Mobile menu link styling */
+#mobile-menu .mobile-navlink {
+  @apply font-serif font-bold text-black uppercase tracking-[0.35em] text-sm transition-colors duration-200;
+}
+
+#mobile-menu .mobile-navlink:hover {
+  @apply text-luxury-gold;
+}
   </style>
 </nav>
 <!-- END: Navigation -->
