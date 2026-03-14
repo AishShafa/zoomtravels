@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zoom Travels | Global Aviation &amp; Luxury Travel</title>
+<!-- Tailwind CSS CDN with Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Playfair Display for Serifs, Inter for Sans -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'luxury-black': '#0a0a0a',
+            'luxury-cream': '#f9f7f2',
+            'luxury-gold': '#c5a059',
+          },
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
+    }
+  </script>
+<style data-purpose="custom-animations">
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 1.2s ease-out forwards;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .destination-card:hover img {
+      transform: scale(1.05);
+    }
+    .luxury-overlay {
+      background: linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.6) 100%);
+    }
+    .faq-accordion[open] summary svg {
+      transform: rotate(180deg);
+    }
+    .hero-video {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body class="bg-luxury-black text-luxury-cream font-sans selection:bg-luxury-gold selection:text-luxury-black">
+<!-- BEGIN: Navigation -->
+<nav
+  id="zt-navbar"
+  class="fixed top-0 inset-x-0 z-50 transition-all duration-300"
+>
+  <div class="h-28 w-full px-10">
+    <div class="hidden md:grid h-full grid-cols-[1fr_1fr_2fr_1fr_1fr] items-center text-xs tracking-[0.35em] uppercase leading-none">
+      <a href="#home" class="zt-navlink justify-self-center">Home</a>
+      <a href="#destinations" class="zt-navlink justify-self-center">Destinations</a>
+
+      <div class="relative flex items-center justify-center leading-none">
+        <img
+          src="/logo-white.png"
+          alt="ZoomTravels logo white"
+          class="zt-logo zt-logo--white h-20 w-auto object-contain transition-all duration-300"
+        />
+
+        <img
+          src="/logo.png"
+          alt="ZoomTravels logo dark"
+          class="zt-logo zt-logo--dark absolute inset-0 m-auto h-20 w-auto object-contain transition-all duration-300 opacity-0"
+        />
+      </div>
+
+      <a href="#faq" class="zt-navlink justify-self-center">FAQ</a>
+      <a href="#contact" class="zt-navlink justify-self-center">Contact</a>
+    </div>
+
+    <div class="md:hidden h-full flex items-center text-xs tracking-widest uppercase leading-none text-white/90">
+      Menu
+    </div>
+  </div>
+
+  <style>
+    /* TOP (initial) state: transparent, no tint, white links + white logo */
+    #zt-navbar {
+      background: transparent;
+      border-bottom: 1px solid transparent;
+      backdrop-filter: none;
+    }
+    .zt-navlink {
+      color: rgba(255, 255, 255, 0.82);
+      transition: color 0.2s ease;
+    }
+    .zt-navlink:hover {
+      color: rgba(255, 255, 255, 1);
+    }
+
+    /* SCROLLED state: glass (white blur), links dark, dark logo, smaller logo */
+    #zt-navbar.is-scrolled {
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+    #zt-navbar.is-scrolled .zt-navlink {
+      color: rgba(15, 23, 42, 0.70); /* slate-ish */
+    }
+    #zt-navbar.is-scrolled .zt-navlink:hover {
+      color: rgba(15, 23, 42, 1);
+    }
+
+    /* Logo swap */
+    .zt-logo {
+      pointer-events: none;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    #zt-navbar.is-scrolled .zt-logo--white {
+      opacity: 0;
+    }
+
+    #zt-navbar.is-scrolled .zt-logo--dark {
+      opacity: 1;
+    }
+
+    #zt-navbar.is-scrolled .zt-logo {
+      transform: scale(0.92);
+    }
+
+    /* Hidden state: slide up when scrolling down */
+    #zt-navbar.zt-navbar--hidden {
+      transform: translateY(-100%);
+    }
+  </style>
+</nav>
+<!-- END: Navigation -->
+<!-- BEGIN: Hero Section -->
+<header class="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center" id="home">
+<!-- Cinematic Video Background -->
+<div class="absolute inset-0 z-0 bg-blue-900/20">
+<video autoplay class="hero-video" loop muted playsinline>
+  <source src="hero-video.mp4" type="video/mp4"/>
+</video>
+<div class="absolute inset-0 luxury-overlay"></div>
+</div>
+<!-- Hero Content -->
+<div class="relative z-10 text-center px-4 max-w-5xl mx-auto animate-fade-in">
+<h1 class="text-5xl md:text-8xl font-serif tracking-tight mb-8 font-medium">
+      Discover cheap flights<br/>from top airlines<br/>around the world
+    </h1>
+<div class="flex flex-col items-center space-y-8">
+<a class="inline-block px-10 py-3 border border-white/40 bg-white/10 backdrop-blur-md text-white text-[10px] tracking-[0.2em] font-semibold uppercase hover:bg-white hover:text-luxury-black transition-all duration-500" href="#destinations">
+        Explore All
+      </a>
+<p class="text-[11px] tracking-widest font-light opacity-80 uppercase">
+        we handpick the cheapest fares from 50+ airlines
+      </p>
+<!-- WhatsApp Floating CTA (Integrated) -->
+<a class="inline-flex items-center px-8 py-4 border border-luxury-gold/30 bg-luxury-black/40 backdrop-blur-md text-luxury-gold hover:bg-luxury-gold hover:text-luxury-black transition-all duration-500 rounded-full group mt-12" href="https://wa.me/+9609781783">
+<span class="uppercase tracking-widest text-[10px] font-bold mr-4">Book via WhatsApp</span>
+<svg class="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17 8l4 4m0 0l-4 4m4-4H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</a>
+</div>
+</div>
+</header>
+<!-- END: Hero Section -->
+<!-- BEGIN: Elite Destinations -->
+<section class="py-32 bg-luxury-black overflow-hidden" id="destinations">
+<div class="px-8 md:px-20 mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div class="max-w-xl">
+<h2 class="text-4xl md:text-5xl font-serif mb-6">Curated Escapes</h2>
+<p class="text-luxury-cream/60 leading-relaxed font-light">
+          From the City Nightlife to visiting the waterfalls. 
+          The beautiful island of Sri Lanka has it all.
+          Visit Sri Lanka and see it for yourself. 
+        </p>
+</div>
+<div class="hidden md:block text-xs uppercase tracking-widest opacity-40">
+        Swipe to Explore
+      </div>
+</div>
+<!-- Horizontal Scroll Gallery -->
+<div class="flex gap-8 overflow-x-auto hide-scrollbar px-8 md:px-20 pb-12 cursor-grab active:cursor-grabbing">
+<!-- Sri Lanka -->
+<div class="destination-card flex-none w-[290px] md:w-[350px] group">
+<div class="relative overflow-hidden aspect-[3/4] mb-6">
+<img alt="Colombo" class="w-full h-full object-cover transition-transform duration-700" src="https://images.squarespace-cdn.com/content/v1/5f18420f3734db1079654907/1753896597438-42AAYPUHY7T85WCPR4RL/b933e52f2b7a4f589f07caaa4e8bb94b.jpg?format=2500w"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<h3 class="text-xl font-serif">City Stay</h3>
+<p class="text-xs uppercase tracking-widest text-luxury-gold mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Experience Sri Lanka’s vibrant nightlife with a tour that brings the island’s cities to life after dark. Designed for night owls and culture seekers alike, this city nightlife tour showcases the best of Sri Lanka’s evening entertainment from bustling streets and stylish lounges to live music and local flavor.</p>
+</div>
+<!-- Wildlife -->
+<div class="destination-card flex-none w-[290px] md:w-[350px] group">
+<div class="relative overflow-hidden aspect-[3/4] mb-6">
+<img alt="Wildlife Adventure" class="w-full h-full object-cover transition-transform duration-700" src="https://media.cntravellerme.com/photos/66e9737420b238fd5903b7d3/1:1/w_3516,h_3516,c_limit/1306572015"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<h3 class="text-xl font-serif">Wildlife Adventure</h3>
+<p class="text-xs uppercase tracking-widest text-luxury-gold mt-2 opacity-0 group-hover:opacity-100 transition-opacity">A wildlife adventure through one of Sri Lanka’s most iconic nature reserves, Yala National Park is a must‑visit for nature lovers and safari enthusiasts. Known for its rich biodiversity and thrilling safari experiences, the park offers visitors the chance to see a wide variety of wild animals in their natural habitat.</p>
+</div>
+<!-- Heritage -->
+<div class="destination-card flex-none w-[290px] md:w-[350px] group">
+<div class="relative overflow-hidden aspect-[3/4] mb-6">
+<img alt="Heritage" class="w-full h-full object-cover transition-transform duration-700" src="https://www.bluelankatours.com/wp-content/uploads/2023/09/nissanka-lata-mandapaya.jpg"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<h3 class="text-xl font-serif">Heritage Sites</h3>
+<p class="text-xs uppercase tracking-widest text-luxury-gold mt-2 opacity-0 group-hover:opacity-100 transition-opacity">A guided tour through Sri Lanka’s most iconic World Heritage Sites, combining ancient culture, history, nature, and scenic landscapes. The itinerary covers all eight Sri Lankan sites in one journey and can be tailored to your preferences.</p>
+</div>
+<!-- Cave -->
+<div class="destination-card flex-none w-[290px] md:w-[350px] group">
+<div class="relative overflow-hidden aspect-[3/4] mb-6">
+<img alt="Cave" class="w-full h-full object-cover transition-transform duration-700" src="https://scontent.fmle2-2.fna.fbcdn.net/v/t39.30808-6/481186856_9241696632587268_7654198311348388432_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=e06c5d&_nc_ohc=PlX-_ZzGTXIQ7kNvwGxPpMQ&_nc_oc=AdmK4ni_YNngzmW1KTQVQ78d8U-SPaopJcwNHGh-UL_KoRrONP5U9CMVl0JCEhbdWSQ&_nc_zt=23&_nc_ht=scontent.fmle2-2.fna&_nc_gid=pyVN2uxks5JONKTG8ncFVA&_nc_ss=8&oh=00_AfzOOOQiiPw9IGRdrAfwqXOaXgu2LJwwTXx5hlvm4lr1SA&oe=69BA321C"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<h3 class="text-xl font-serif">Cave Temples</h3>
+<p class="text-xs uppercase tracking-widest text-luxury-gold mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Explore the majestic Dambulla Cave Temple, also known as the Golden Temple, a UNESCO World Heritage Site and the largest, best-preserved Buddhist temple complex in Sri Lanka. Located in the heart of the country, this historic site combines spiritual significance, ancient art, and breathtaking architecture.</p>
+</div>
+<!-- Waterfall -->
+<div class="destination-card flex-none w-[290px] md:w-[350px] group">
+<div class="relative overflow-hidden aspect-[3/4] mb-6">
+<img alt="Waterfall" class="w-full h-full object-cover transition-transform duration-700" src="https://www.holidify.com/images/cmsuploads/compressed/NaturalBeautyofRambodaFalls_20220724210039.jpg"/>
+<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+</div>
+<h3 class="text-xl font-serif">Waterfalls</h3>
+<p class="text-xs uppercase tracking-widest text-luxury-gold mt-2 opacity-0 group-hover:opacity-100 transition-opacity">Discover the breathtaking beauty of Sri Lanka's hidden waterfalls, each with its unique charm and natural surroundings. Our guided tours take you to the most stunning cascades, where you can enjoy swimming, photography, and a deep connection with nature.</p>
+</div>
+</div>
+</section>
+<!-- END: Elite Destinations -->
+<!-- BEGIN: FAQ Section -->
+<section class="py-32 bg-luxury-cream text-luxury-black" id="faq">
+<div class="container mx-auto px-8 max-w-3xl">
+<div class="text-center mb-20">
+<span class="text-[10px] uppercase tracking-[0.3em] font-bold text-luxury-gold mb-4 block">Support</span>
+<h2 class="text-4xl md:text-5xl font-serif mb-8">Frequently Asked</h2>
+</div>
+<div class="space-y-6">
+<details class="faq-accordion group border-b border-luxury-black/10 pb-6">
+<summary class="flex items-center justify-between cursor-pointer list-none">
+<span class="text-lg font-medium font-serif">What information do I need to provide for a booking?</span>
+<svg class="w-5 h-5 transition-transform duration-300 opacity-40" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</summary>
+<div class="mt-4 text-sm leading-relaxed opacity-70 font-light">To arrange your booking, we typically require the passenger’s full name exactly as shown on the passport, travel dates, destination, contact number, and passport copy where required.</div>
+</details>
+<details class="faq-accordion group border-b border-luxury-black/10 pb-6">
+<summary class="flex items-center justify-between cursor-pointer list-none">
+<span class="text-lg font-medium font-serif">What payment methods do you accept?</span>
+<svg class="w-5 h-5 transition-transform duration-300 opacity-40" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</summary>
+<div class="mt-4 text-sm leading-relaxed opacity-70 font-light">Payment instructions and available methods will be shared during the booking process. Please contact us directly for the latest payment details.</div>
+</details>
+<details class="faq-accordion group border-b border-luxury-black/10 pb-6">
+<summary class="flex items-center justify-between cursor-pointer list-none">
+<span class="text-lg font-medium font-serif">Can I make changes to my ticket after booking?</span>
+<svg class="w-5 h-5 transition-transform duration-300 opacity-40" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</summary>
+<div class="mt-4 text-sm leading-relaxed opacity-70 font-light">Yes, ticket changes may be possible depending on the airline’s fare conditions and seat availability. Any applicable airline charges or fare differences will be advised accordingly.</div>
+</details>
+<details class="faq-accordion group border-b border-luxury-black/10 pb-6">
+<summary class="flex items-center justify-between cursor-pointer list-none">
+<span class="text-lg font-medium font-serif">Can I cancel my ticket after it has been issued?</span>
+<svg class="w-5 h-5 transition-transform duration-300 opacity-40" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</summary>
+<div class="mt-4 text-sm leading-relaxed opacity-70 font-light">Cancellation requests can be made in line with the airline’s fare rules and ticket conditions. Our team will guide you through the process and advise on any applicable charges.</div>
+</details>
+<details class="faq-accordion group border-b border-luxury-black/10 pb-6">
+<summary class="flex items-center justify-between cursor-pointer list-none">
+<span class="text-lg font-medium font-serif">Am I eligible for a refund if I cancel my ticket?</span>
+<svg class="w-5 h-5 transition-transform duration-300 opacity-40" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</summary>
+<div class="mt-4 text-sm leading-relaxed opacity-70 font-light">Refund eligibility depends on the airline’s policy and the fare type selected at the time of booking. Some tickets may be refundable in full or in part, while others may be non-refundable.</div>
+</details>
+<details class="faq-accordion group border-b border-luxury-black/10 pb-6">
+<summary class="flex items-center justify-between cursor-pointer list-none">
+<span class="text-lg font-medium font-serif">Why choose Zoom Travels?</span>
+<svg class="w-5 h-5 transition-transform duration-300 opacity-40" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</summary>
+<div class="mt-4 text-sm leading-relaxed opacity-70 font-light">At Zoom Travels, we offer a more personal and attentive travel experience. From tailored flight options to responsive support and reliable guidance, we are committed to making your journey simpler, smoother, and more convenient from start to finish.</div>
+</details>
+</div>
+</div>
+</section>
+<!-- END: FAQ Section -->
+<!-- BEGIN: Final CTA -->
+<section class="bg-luxury-black text-center px-8 border-t border-luxury-cream/10 pt-40 pb-20" id="contact">
+<h2 class="text-4xl md:text-6xl font-serif italic mb-12">Your journey begins with a conversation.</h2>
+<a class="inline-block px-12 py-6 bg-luxury-gold text-luxury-black uppercase tracking-[0.2em] font-medium text-sm hover:bg-luxury-cream transition-colors duration-300" href="https://wa.me/+9609781783">
+      Initiate Inquiry via WhatsApp
+    </a>
+</section>
+<!-- END: Final CTA -->
+<!-- BEGIN: Footer -->
+<footer class="bg-luxury-black text-luxury-cream pb-16 px-8 pt-16">
+<div class="max-w-screen-xl mx-auto flex flex-col items-center">
+<!-- Minimal Divider -->
+<div class="w-12 h-px bg-luxury-cream/20 mb-20"></div>
+<!-- Minimal Brand Center -->
+<div class="text-center mb-16">
+<div class="flex flex-col items-center">
+<span class="text-2xl md:text-3xl font-serif tracking-[0.2em] uppercase font-medium">Zoom Travels</span>
+<span class="text-[8px] tracking-[0.6em] font-light mt-2 uppercase opacity-40">Just a message away</span>
+<a href="mailto:zzoomtravels@outlook.com" class="text-[10px] tracking-[0.3em] font-light mt-4 text-luxury-gold hover:text-luxury-cream transition-colors">zzoomtravels@outlook.com</a>
+</div>
+</div>
+<!-- Socials -->
+<div class="flex space-x-12 mb-24">
+<a class="text-luxury-cream/40 hover:text-luxury-gold transition-colors duration-500" href="https://www.instagram.com/zoomtravelsmv/">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c.796 0 1.441.645 1.441 1.44s-.645 1.44-1.441 1.44c-.795 0-1.439-.645-1.439-1.44s.644-1.44 1.439-1.44z"></path>
+</svg>
+</a>
+<a class="text-luxury-cream/40 hover:text-luxury-gold transition-colors duration-500" href="https://www.facebook.com/Zzoomtravels">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
+</svg>
+</a>
+<a class="text-luxury-cream/40 hover:text-luxury-gold transition-colors duration-500" href="https://wa.me/+9609781783">
+<svg class="w-5 h-5 fill-current" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.414 0 .018 5.396.015 12.03c0 2.12.554 4.189 1.604 6.04L0 24l6.117-1.605a11.81 11.81 0 005.925 1.585h.005c6.635 0 12.033-5.396 12.036-12.031a11.817 11.817 0 00-3.62-8.508z"></path></svg>
+</a></div>
+<!-- Copyright -->
+<div class="text-[9px] uppercase tracking-[0.4em] font-light text-luxury-cream/30">
+        © 2026 Zoom Travels. All rights reserved.
+      </div>
+</div>
+</footer>
+<!-- END: Footer -->
+<script data-purpose="scroll-interactivity">
+    // Simple intersection observer for fade-in effects
+    const observerOptions = {
+      threshold: 0.1
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in');
+          entry.target.style.opacity = '1';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      section.style.opacity = '0';
+      observer.observe(section);
+    });
+
+    // Navbar scroll state (transparent before scroll, glass after scroll, hide on scroll down)
+    const navbar = document.getElementById('zt-navbar');
+    const SCROLL_THRESHOLD = 10;
+    let lastScrollY = window.scrollY;
+
+    const updateNavbarOnScroll = () => {
+      if (!navbar) return;
+      const currentScrollY = window.scrollY;
+
+      // Toggle scrolled class for glass effect
+      navbar.classList.toggle('is-scrolled', currentScrollY > SCROLL_THRESHOLD);
+
+      // Hide/show based on scroll direction
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down and past 100px: hide navbar
+        navbar.classList.add('zt-navbar--hidden');
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up: show navbar
+        navbar.classList.remove('zt-navbar--hidden');
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', updateNavbarOnScroll, { passive: true });
+    updateNavbarOnScroll();
+  </script>
+</body></html>
