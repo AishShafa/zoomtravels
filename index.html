@@ -4,6 +4,8 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Zoom Travels | Global Aviation &amp; Luxury Travel</title>
+    <link rel="icon" href="/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="/logo.png">
 <!-- Tailwind CSS CDN with Plugins -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <!-- Google Fonts: Playfair Display for Serifs, Inter for Sans -->
@@ -94,9 +96,24 @@
       <a href="#contact" class="zt-navlink justify-self-center">Contact</a>
     </div>
 
-    <div class="md:hidden h-full flex items-center text-xs tracking-widest uppercase leading-none text-white/90">
-      Menu
-    </div>
+    <!-- Mobile Navbar -->
+<div class="md:hidden flex items-center justify-between h-full px-4">
+  <!-- Logo -->
+  <img src="/logo.png" alt="ZoomTravels logo" class="h-12 w-auto object-contain">
+
+  <!-- Menu Button -->
+  <button id="mobile-menu-button" class="text-white uppercase font-bold">
+    Menu
+  </button>
+</div>
+
+<!-- Mobile Dropdown Menu (hidden initially) -->
+<div id="mobile-menu" class="hidden absolute top-28 left-0 w-full bg-luxury-black text-luxury-cream flex flex-col items-center space-y-4 py-6 z-40">
+  <a href="#home" class="block">Home</a>
+  <a href="#destinations" class="block">Destinations</a>
+  <a href="#faq" class="block">FAQ</a>
+  <a href="#contact" class="block">Contact</a>
+</div>
   </div>
 
   <style>
@@ -406,4 +423,12 @@
     window.addEventListener('scroll', updateNavbarOnScroll, { passive: true });
     updateNavbarOnScroll();
   </script>
+    <script>
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  menuButton.addEventListener('click', () => {
+    mobileMenu.classList.toggle('hidden');
+  });
+</script>
 </body></html>
