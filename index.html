@@ -179,16 +179,23 @@
     #zt-navbar.zt-navbar--hidden {
       transform: translateY(-100%);
     }
-
-      /* Mobile menu link styling */
+      
+  </style>
+    <style>
 #mobile-menu .mobile-navlink {
-  @apply font-serif font-bold text-black uppercase tracking-[0.35em] text-sm transition-colors duration-200;
+  font-family: "Playfair Display", serif;
+  font-weight: bold;
+  color: #000000; /* ensure pure black */
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+  font-size: 0.875rem; /* ~text-sm */
+  transition: color 0.2s ease;
 }
 
 #mobile-menu .mobile-navlink:hover {
-  @apply text-luxury-gold;
+  color: #c5a059; /* luxury-gold hover */
 }
-  </style>
+</style>
 </nav>
 <!-- END: Navigation -->
 <!-- BEGIN: Hero Section -->
